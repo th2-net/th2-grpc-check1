@@ -33,7 +33,7 @@ publishing {
             from components.java
 
             groupId = 'com.exactpro'
-            artifactId = 'grpc-generator'
+            artifactId = 'grpc-check1'
             version = '1.0'
 
         }
