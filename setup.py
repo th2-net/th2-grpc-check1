@@ -15,7 +15,7 @@
 from distutils.cmd import Command
 from setuptools.command.sdist import sdist
 import shutil
-import pkg_resources
+from pkg_resources import resource_filename
 import os
 from setuptools import setup, find_packages
 from os import environ
@@ -48,17 +48,18 @@ class ProtoGenerator(Command):
                 if filename.endswith('.proto'):
                     proto_files.append(os.path.abspath(os.path.join(root, filename)))
 
-        well_known_protos_include = pkg_resources.resource_filename('grpc_tools', '_proto')
+        protos = [('grpc_tools', '_proto'),
+                  ('grpc_common', ''),
+                  ('grpc-estore', '')]
+        protos_include = [f'--proto_path={proto_path}'] + \
+                         [f'--proto_path={resource_filename(x[0], x[1])}' for x in protos]
 
         from grpc_tools import protoc
         for proto_file in proto_files:
-            command = [
-                          'grpc_tools.protoc',
-                          '--proto_path={}'.format(proto_path),
-                          '--proto_path={}'.format(well_known_protos_include),
-                          '--python_out={}'.format(gen_path),
-                          '--grpc_python_out={}'.format(gen_path),
-                      ] + [proto_file]
+            command = ['grpc_tools.protoc'] + \
+                      protos_include + \
+                      ['--python_out={}'.format(gen_path), '--grpc_python_out={}'.format(gen_path)] + \
+                      [proto_file]
             if protoc.main(command) != 0:
                 if self.strict_mode:
                     raise Exception('error: {} failed'.format(command))
