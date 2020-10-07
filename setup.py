@@ -64,7 +64,7 @@ class ProtoGenerator(Command):
                     raise Exception('error: {} failed'.format(command))
 
 
-cclass CustomDist(sdist):
+class CustomDist(sdist):
 
     def run(self):
         shutil.copytree('src/main/proto/th2', f'{package_name}/th2')
