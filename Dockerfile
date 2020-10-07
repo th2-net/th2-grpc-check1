@@ -7,7 +7,6 @@ ARG artifactory_url
 ARG pypi_repository_url
 ARG pypi_user
 ARG pypi_password
-ARG app_name
 ARG app_version
 
 FROM gradle:6.6-jdk11 as builder
@@ -35,16 +34,13 @@ FROM python:3.8-slim as python
 ARG pypi_repository_url
 ARG pypi_user
 ARG pypi_password
-ARG app_name
 ARG app_version
 
 WORKDIR /home/project
 COPY --from=generator /home/project .
-RUN export APP_NAME=${app_name} && \
-    export APP_VERSION=${app_version} && \
+RUN export APP_VERSION=${app_version} && \
+    printf "%s" "$app_version" > "version.info" && \
     pip install -r requirements.txt && \
     python setup.py generate && \
-    touch src/gen/main/python/__init__.py && \
-    2to3 src/gen/main/python -w -n && \
     python setup.py sdist && \
     twine upload --repository-url ${pypi_repository_url} --username ${pypi_user} --password ${pypi_password} dist/*

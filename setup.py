@@ -19,6 +19,8 @@ import pkg_resources
 import os
 from setuptools import setup, find_packages
 from os import environ
+from pathlib import Path
+from lib2to3.main import main as convert2to3
 
 
 class ProtoGenerator(Command):
@@ -62,21 +64,30 @@ class ProtoGenerator(Command):
                     raise Exception('error: {} failed'.format(command))
 
 
-class CustomDist(sdist):
+cclass CustomDist(sdist):
 
     def run(self):
-        package_name = self.distribution.metadata.name
+        shutil.copytree('src/main/proto/th2', f'{package_name}/th2')
 
-        shutil.copytree('src/main/proto/th2', f'{package_name}/proto')
         shutil.copytree('src/gen/main/python/th2', f'{package_name}/grpc')
+        Path(f'{package_name}/grpc/__init__.py').touch()
+        convert2to3('lib2to3.fixes', [f'{package_name}/grpc', '-w', '-n'])
+
+        Path(f'{package_name}/__init__.py').touch()
 
         sdist.run(self)
 
         shutil.rmtree(package_name, ignore_errors=True)
 
 
-package_name = environ['APP_NAME'].replace('-', '_') if 'APP_NAME' in environ else 'grpc_generator_template'
-package_version = environ['APP_VERSION'] if 'APP_VERSION' in environ else '1.0'
+package_name = 'grpc_check1'
+
+with open('version.info', 'r') as file:
+    package_version = file.read()
+
+with open('README.md', 'r') as file:
+    long_description = file.read()
+
 
 setup(
     name=package_name,
@@ -87,9 +98,9 @@ setup(
     python_requires='>=3.7',
     author_email='th2-devs@exactprosystems.com',
     description='grpc-check1',
-    long_description=open('README.md').read(),
-    packages=[package_name, f'{package_name}/proto', f'{package_name}/grpc'],
-    package_data={f'{package_name}/proto': ['*.proto']},
+    long_description=long_description,
+    packages=['', package_name, f'{package_name}/th2', f'{package_name}/grpc'],
+    package_data={'': ['version.info'], f'{package_name}/th2': ['*.proto']},
     cmdclass={
         'generate': ProtoGenerator,
         'sdist': CustomDist
