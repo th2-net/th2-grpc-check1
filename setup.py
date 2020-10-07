@@ -50,7 +50,7 @@ class ProtoGenerator(Command):
 
         protos = [('grpc_tools', '_proto'),
                   ('grpc_common', ''),
-                  ('grpc-estore', '')]
+                  ('grpc_estore', '')]
         protos_include = [f'--proto_path={proto_path}'] + \
                          [f'--proto_path={resource_filename(x[0], x[1])}' for x in protos]
 
