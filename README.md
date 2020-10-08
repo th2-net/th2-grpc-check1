@@ -4,11 +4,15 @@
 This tool generates code from `.proto` files and upload constructed packages (`.proto` files with generated code) to desired repositories.
 
 ### How to use:
-1. Place your own `.proto` files under `src/main/proto` directory (remove example files `Foo.proto` and `Bar.proto` if present).
-2. Edit `rootProject.name` variable in `settings.gradle file`. This will be the name of Java package.
-3. Edit `package_name` variable in `setup.py`. This will be the name of Python package. <br>
+1. Edit `rootProject.name` variable in `settings.gradle file`. This will be the name of Java package.
+2. Edit `package_name` variable in `setup.py`. This will be the name of Python package. <br>
 You can also edit parameters of `setup.py` in `setup` function invocation such as: `url`, `author`, `author_email`, `description`. <br> 
 Do not edit the others.
+3. Create a directory with the name `package_name` (as in Python) under `src/main/proto` directory (remove example files `Foo.proto` and `Bar.proto` if present).
+4. Place your own `.proto` files in created directory.
+5. Edit imports in your `.proto` files so that they look like <br>
+`import "{package_name}/{proto_file_name}.proto"`
+6. Edit paths in `python-service-generator` stage in Dockerfile. They should correspond to the project structure.
 
 #### Docker
 You can run everything via Docker:

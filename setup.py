@@ -14,8 +14,10 @@
 
 from distutils.cmd import Command
 from setuptools.command.sdist import sdist
+from distutils.dir_util import copy_tree
 import shutil
 from pkg_resources import resource_filename
+from distutils.sysconfig import get_python_lib
 import os
 from setuptools import setup, find_packages
 from os import environ
@@ -48,10 +50,10 @@ class ProtoGenerator(Command):
                 if filename.endswith('.proto'):
                     proto_files.append(os.path.abspath(os.path.join(root, filename)))
 
-        protos = [('grpc_tools', '_proto'),
-                  ('grpc_common', 'proto')]
+        protos = [('grpc_tools', '_proto')]
         protos_include = [f'--proto_path={proto_path}'] + \
-                         [f'--proto_path={resource_filename(x[0], x[1])}' for x in protos]
+                         [f'--proto_path={resource_filename(x[0], x[1])}' for x in protos] + \
+                         [f'--proto_path={get_python_lib()}']
 
         from grpc_tools import protoc
         for proto_file in proto_files:
@@ -67,13 +69,11 @@ class ProtoGenerator(Command):
 class CustomDist(sdist):
 
     def run(self):
-        shutil.copytree('src/main/proto', f'{package_name}/proto')
+        copy_tree(f'src/main/proto/{package_name}', f'{package_name}')
 
-        shutil.copytree('src/gen/main/python', f'{package_name}/grpc')
-        Path(f'{package_name}/grpc/__init__.py').touch()
-        convert2to3('lib2to3.fixes', [f'{package_name}/grpc', '-w', '-n'])
-
+        copy_tree(f'src/gen/main/python/{package_name}', f'{package_name}')
         Path(f'{package_name}/__init__.py').touch()
+        convert2to3('lib2to3.fixes', [f'{package_name}', '-w', '-n'])
 
         sdist.run(self)
 
@@ -99,8 +99,8 @@ setup(
     author_email='th2-devs@exactprosystems.com',
     description='grpc-check1',
     long_description=long_description,
-    packages=['', package_name, f'{package_name}/proto', f'{package_name}/grpc'],
-    package_data={'': ['version.info'], f'{package_name}/proto': ['*.proto']},
+    packages=['', package_name],
+    package_data={'': ['version.info'], package_name: ['*.proto']},
     cmdclass={
         'generate': ProtoGenerator,
         'sdist': CustomDist
