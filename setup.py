@@ -12,15 +12,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
+from setuptools import setup
 from distutils.cmd import Command
+import os
+from pkg_resources import resource_filename
+from distutils.sysconfig import get_python_lib
 from setuptools.command.sdist import sdist
 from distutils.dir_util import copy_tree
 import shutil
-from pkg_resources import resource_filename
-from distutils.sysconfig import get_python_lib
-import os
-from setuptools import setup, find_packages
-from os import environ
 from pathlib import Path
 from lib2to3.main import main as convert2to3
 
