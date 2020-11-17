@@ -101,7 +101,7 @@ setup(
     license='Apache License 2.0',
     python_requires='>=3.7',
     install_requires=[
-        'th2-grpc-common=2.3.0'
+        'th2-grpc-common==2.3.0'
     ],
     packages=['', package_name],
     package_data={'': ['package_info.json'], package_name: ['*.proto']},
