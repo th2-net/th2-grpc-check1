@@ -82,9 +82,8 @@ class CustomDist(sdist):
 
         make_packages(package_name)
 
-        copy_tree(f'src/main/proto/{package_name}', f'{package_name}/proto')
-        proto_dirs = [x[0] for x in os.walk(f'{package_name}/proto')]
-        packages.extend(proto_dirs)
+        copy_tree(f'src/main/proto/{package_name}', package_name)
+        proto_dirs = [x[0] for x in os.walk(package_name)]
         package_data.update(dict.fromkeys(proto_dirs, ['*.proto']))
 
         sdist.run(self)
@@ -117,7 +116,7 @@ setup(
     license='Apache License 2.0',
     python_requires='>=3.7',
     install_requires=[
-        'th2-grpc-common==2.3.2'
+        'th2-grpc-common~=2.3.3'
     ],
     packages=packages,
     package_data=package_data,
