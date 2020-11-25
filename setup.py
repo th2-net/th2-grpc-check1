@@ -12,24 +12,23 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-from setuptools import setup
 import json
-from distutils.cmd import Command
 import os
-from pkg_resources import resource_filename
-from distutils.sysconfig import get_python_lib
-from setuptools.command.sdist import sdist
+from distutils.cmd import Command
 from distutils.dir_util import copy_tree
-from shutil import rmtree
+from distutils.sysconfig import get_python_lib
 from pathlib import Path
-from lib2to3.main import main as convert2to3
+from shutil import rmtree
+
+from pkg_resources import resource_filename
+from setuptools import setup
+from setuptools.command.sdist import sdist
 
 
 class ProtoGenerator(Command):
 
     description = 'build protobuf modules'
-    user_options = [('strict-mode', 's',
-                     'exit with non-zero value if the proto compiling fails.')]
+    user_options = [('strict-mode', 's', 'exit with non-zero value if the proto compiling fails')]
 
     def initialize_options(self):
         self.strict_mode = False
@@ -61,23 +60,37 @@ class ProtoGenerator(Command):
                       protos_include + \
                       ['--python_out={}'.format(gen_path), '--grpc_python_out={}'.format(gen_path)] + \
                       [proto_file]
+
             if protoc.main(command) != 0:
                 if self.strict_mode:
-                    raise Exception('error: {} failed'.format(command))
+                    raise Exception(f'error: {command} failed')
 
 
 class CustomDist(sdist):
 
     def run(self):
-        copy_tree(f'src/main/proto/{package_name}', package_name)
-
         copy_tree(f'src/gen/main/python/{package_name}', package_name)
         Path(f'{package_name}/__init__.py').touch()
-        convert2to3('lib2to3.fixes', [package_name, '-w', '-n'])
+        packages.append(package_name)
+
+        def make_packages(root_dir):
+            for path in Path(root_dir).iterdir():
+                if path.is_dir():
+                    path.joinpath('__init__.py').touch()
+                    packages.append(str(path))
+                    make_packages(path)
+
+        make_packages(package_name)
+
+        copy_tree(f'src/main/proto/{package_name}', f'{package_name}/proto')
+        proto_dirs = [x[0] for x in os.walk(f'{package_name}/proto')]
+        packages.extend(proto_dirs)
+        package_data.update(dict.fromkeys(proto_dirs, ['*.proto']))
 
         sdist.run(self)
 
         rmtree(package_name, ignore_errors=True)
+
 
 with open('package_info.json', 'r') as file:
     package_info = json.load(file)
@@ -87,6 +100,9 @@ package_version = package_info['package_version']
 
 with open('README.md', 'r') as file:
     long_description = file.read()
+
+packages = ['.']
+package_data = {'.': ['package_info.json']}
 
 
 setup(
@@ -101,10 +117,10 @@ setup(
     license='Apache License 2.0',
     python_requires='>=3.7',
     install_requires=[
-        'th2-grpc-common==2.3.0'
+        'th2-grpc-common==2.3.2'
     ],
-    packages=['', package_name],
-    package_data={'': ['package_info.json'], package_name: ['*.proto']},
+    packages=packages,
+    package_data=package_data,
     cmdclass={
         'generate': ProtoGenerator,
         'sdist': CustomDist
