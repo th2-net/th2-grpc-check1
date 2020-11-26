@@ -1,13 +1,15 @@
 # th2 gRPC check1 library
 
-This library contains proto messages and service with RPC methods that are used in [check1](https://github.com/th2-net/th2-grpc-check1/blob/master/src/main/proto/th2_grpc_check1/check1.proto "check1.proto") file for details. <br>
-Tool generates code from `.proto` files and uploads built packages (`.proto` files and generated code) to specified repositories.
+This library contains proto messages and `Check1` service with RPC methods that are used in [th2 check1](https://github.com/th2-net/th2-check1 "th2-check1"). See [check1.proto](src/main/proto/th2_grpc_check1/check1.proto "check1.proto") file for details. <br>
+Tool generates code from `.proto` files and uploads built packages (`.proto` files and generated code) to the specified repositories.
 
-## How to maintain project:
+## How to maintain project
 1. Make your changes.
 2. Up version of Java package in `gradle.properties` file.
 3. Up version of Python package in `package_info.json` file.
 4. Commit everything.
+
+## How to run project
 
 ### Java
 If you wish to manually create and publish package for Java, run these command:
