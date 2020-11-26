@@ -21,7 +21,7 @@ from pathlib import Path
 from shutil import rmtree
 
 from pkg_resources import resource_filename
-from setuptools import setup
+from setuptools import setup, find_packages
 from setuptools.command.sdist import sdist
 
 
@@ -69,22 +69,22 @@ class ProtoGenerator(Command):
 class CustomDist(sdist):
 
     def run(self):
+        copy_tree(f'src/main/proto/{package_name}', package_name)
+
         copy_tree(f'src/gen/main/python/{package_name}', package_name)
         Path(f'{package_name}/__init__.py').touch()
-        packages.append(package_name)
 
         def make_packages(root_dir):
             for path in Path(root_dir).iterdir():
                 if path.is_dir():
                     path.joinpath('__init__.py').touch()
-                    packages.append(str(path))
                     make_packages(path)
 
         make_packages(package_name)
 
-        copy_tree(f'src/main/proto/{package_name}', package_name)
-        proto_dirs = [x[0] for x in os.walk(package_name)]
-        package_data.update(dict.fromkeys(proto_dirs, ['*.proto']))
+        self.distribution.packages = [''] + find_packages(include=[package_name, f'{package_name}.*'])
+        self.distribution.package_data = {'': ['package_info.json'],
+                                          **dict.fromkeys(self.distribution.packages[1:], ['*.proto'])}
 
         sdist.run(self)
 
@@ -100,8 +100,8 @@ package_version = package_info['package_version']
 with open('README.md', 'r') as file:
     long_description = file.read()
 
-packages = ['.']
-package_data = {'.': ['package_info.json']}
+packages = [''] + find_packages(include=[package_name, f'{package_name}.*'])
+package_data = {'': ['package_info.json'], **dict.fromkeys(packages[1:], ['*.proto'])}
 
 
 setup(
@@ -116,7 +116,7 @@ setup(
     license='Apache License 2.0',
     python_requires='>=3.7',
     install_requires=[
-        'th2-grpc-common~=2.3.3'
+        'th2-grpc-common~=2.3.5'
     ],
     packages=packages,
     package_data=package_data,
