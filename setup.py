@@ -113,7 +113,7 @@ setup(
     long_description_content_type='text/markdown',
     author='TH2-devs',
     author_email='th2-devs@exactprosystems.com',
-    url='https://github.com/th2-net/th2-grpc-generator-template',
+    url='https://github.com/th2-net/th2-grpc-check1',
     license='Apache License 2.0',
     python_requires='>=3.7',
     install_requires=[
