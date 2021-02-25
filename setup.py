@@ -72,6 +72,7 @@ class CustomDist(sdist):
         copy_tree(f'src/main/proto/{package_name}', package_name)
 
         copy_tree(f'src/gen/main/python/{package_name}', package_name)
+        copy_tree(f'src/gen/main/services/python/{package_name}', package_name)
         Path(f'{package_name}/__init__.py').touch()
 
         def make_packages(root_dir):
@@ -112,11 +113,11 @@ setup(
     long_description_content_type='text/markdown',
     author='TH2-devs',
     author_email='th2-devs@exactprosystems.com',
-    url='https://github.com/th2-net/th2-grpc-check1',
+    url='https://github.com/th2-net/th2-grpc-generator-template',
     license='Apache License 2.0',
     python_requires='>=3.7',
     install_requires=[
-        'th2-grpc-common~=2.3.5'
+        'grpcio-tools==1.33.1'
     ],
     packages=packages,
     package_data=package_data,
