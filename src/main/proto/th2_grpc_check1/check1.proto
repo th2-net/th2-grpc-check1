@@ -44,7 +44,14 @@ message ChainID {
 
 message CheckRuleRequest {
     ConnectionID connectivity_id = 1;
-    MessageFilter filter = 2;
+    oneof kind {
+      /*
+      * This filter will be converted to the RootMessageFilter.
+      * The field will be removed in future releases
+      */
+      MessageFilter filter = 2 [deprecated = true];
+      RootMessageFilter root_filter = 10;
+    }
     Checkpoint checkpoint = 3; // Registered Checkpoint. If the chain_id is also set in the request the checkpoint will be ignored
     int64 timeout = 4; // Timeout for rule execution
     reserved 5; // ReportId reportId = 5; reserved now
@@ -62,7 +69,15 @@ message CheckRuleResponse {
 
 message CheckSequenceRuleRequest {
     PreFilter pre_filter = 1;
-    repeated MessageFilter message_filters = 2;
+    /*
+    * This filters will be converted to root_filters if they are not set.
+    * If message_filters and root_filters are both set the error response will be returned.
+    */
+    repeated MessageFilter message_filters = 2 [deprecated = true];
+    /*
+    * Either this field or message_filters must be set. If both are set the error response will be received from check1
+    */
+    repeated RootMessageFilter root_message_filters = 12;
     Checkpoint checkpoint = 3; // Registered Checkpoint. If the chain_id is also set in the request the checkpoint will be ignored
     int64 timeout = 4; // Timeout for rule execution
     ConnectionID connectivity_id = 5;
@@ -81,5 +96,7 @@ message CheckSequenceRuleResponse {
 }
 
 message PreFilter {
+    reserved 1; // don't know why we skipped it but just in case we should reserve this index
     map<string, ValueFilter> fields = 2;
+    MetadataFilter metadata_filter = 3;
 }
