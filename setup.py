@@ -118,7 +118,7 @@ setup(
     python_requires='>=3.7',
     install_requires=[
         'grpcio-tools==1.33.1',
-        'th2-grpc-common~=2.5.2'
+        'th2-grpc-common~=2.6.0'
     ],
     packages=packages,
     package_data=package_data,
