@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2020 Exactpro (Exactpro Systems Limited)
+ * Copyright 2020-2021 Exactpro (Exactpro Systems Limited)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ service Check1 {
     rpc createCheckpoint (CheckpointRequest) returns (CheckpointResponse) {}
     rpc submitCheckRule (CheckRuleRequest) returns (CheckRuleResponse) {}
     rpc submitCheckSequenceRule(CheckSequenceRuleRequest) returns (CheckSequenceRuleResponse) {}
+    rpc submitNoMessageCheck(NoMessageCheckRequest) returns (NoMessageCheckResponse) {}
 }
 
 message CheckpointRequest {
@@ -79,6 +80,7 @@ message CheckSequenceRuleRequest {
     */
     repeated RootMessageFilter root_message_filters = 12;
     Checkpoint checkpoint = 3; // Registered Checkpoint. If the chain_id is also set in the request the checkpoint will be ignored
+    int64  messageTimeout = 13; // Timeout to wait for messages after checkpoint
     int64 timeout = 4; // Timeout for rule execution
     ConnectionID connectivity_id = 5;
     reserved 6; // ReportId reportId = 5; reserved now
@@ -99,4 +101,21 @@ message PreFilter {
     reserved 1; // don't know why we skipped it but just in case we should reserve this index
     map<string, ValueFilter> fields = 2;
     MetadataFilter metadata_filter = 3;
+}
+
+message NoMessageCheckRequest {
+    PreFilter pre_filter = 1;
+    int64  messageTimeout = 2; // Timeout to wait for messages after checkpoint
+    int64 timeout = 3; // Timeout for rule execution
+    Checkpoint checkpoint = 4; // Registered Checkpoint. If the chain_id is also set in the request the checkpoint will be ignored
+    ChainID chain_id = 5; // You can use it to unite the next rule to the chain with currently submitted one
+    ConnectionID connectivity_id = 6;
+    EventID parent_event_id = 7;
+    string description = 8;
+    Direction direction = 9;
+}
+
+message NoMessageCheckResponse {
+    RequestStatus status = 1;
+    ChainID chain_id = 2; // You can use it to unite the next rule to the chain with currently submitted one
 }
