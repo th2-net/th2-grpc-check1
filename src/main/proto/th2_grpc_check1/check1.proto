@@ -16,6 +16,7 @@
 
 syntax = "proto3";
 
+import "google/protobuf/wrappers.proto";
 import "th2_grpc_common/common.proto";
 
 option java_multiple_files = true;
@@ -91,6 +92,7 @@ message CheckSequenceRuleRequest {
     Direction direction = 10;
     ChainID chain_id = 11; // The chain id to continue checking.
                            // If it's not set the check will be started from the specified checkpoint otherwise checkpoint will be ignored
+    google.protobuf.BoolValue silence_check = 14;
 }
 
 message CheckSequenceRuleResponse {
