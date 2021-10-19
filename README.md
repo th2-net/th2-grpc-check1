@@ -43,6 +43,11 @@ If you wish to manually create and publish a package for Python:
 #### Added:
 + `silence_check` parameter for `CheckSequenceRule`. Enables automated check for extra messages that match the pre-filter.
 
+#### Changed:
++ Migrated `grpc-common` version from `3.7.0` to `3.8.0`
+  + Added `time_precision` and `decimal_precision` to `RootComparisonSettings` message
+  + Added `EQ_TIME_PRECISION` and `EQ_DECIMAL_PRECISION` filter operations
+
 ### 3.4.2
 + Migrated `grpc-common` version from `3.6.0` to `3.7.0`
     + Added `check_repeating_group_order` parameter to `RootComparisonSettings` message
