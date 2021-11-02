@@ -1,4 +1,4 @@
-# th2 gRPC check1 library (3.4.2)
+# th2 gRPC check1 library (3.5.0)
 
 This library contains proto messages and `Check1` service with RPC methods that are used in [th2 check1](https://github.com/th2-net/th2-check1 "th2-check1"). See [check1.proto](src/main/proto/th2_grpc_check1/check1.proto "check1.proto") file for details. <br>
 Tool generates code from `.proto` files and uploads built packages (`.proto` files and generated code) to the specified repositories.
@@ -37,6 +37,16 @@ If you wish to manually create and publish a package for Python:
     `PYPI_REPOSITORY_URL`, `PYPI_USER` and `PYPI_PASSWORD` are parameters for publishing.
 
 ## Release notes
+
+### 3.5.0
+
+#### Added:
++ `silence_check` parameter for `CheckSequenceRule`. Enables automated check for extra messages that match the pre-filter.
+
+#### Changed:
++ Migrated `grpc-common` version from `3.7.0` to `3.8.0`
+  + Added `time_precision` and `decimal_precision` to `RootComparisonSettings` message
+  + Added `EQ_TIME_PRECISION` and `EQ_DECIMAL_PRECISION` filter operations
 
 ### 3.4.2
 + Migrated `grpc-common` version from `3.6.0` to `3.7.0`
