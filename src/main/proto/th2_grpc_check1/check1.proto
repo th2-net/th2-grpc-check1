@@ -46,14 +46,8 @@ message ChainID {
 
 message CheckRuleRequest {
     ConnectionID connectivity_id = 1;
-    oneof kind {
-      /*
-      * This filter will be converted to the RootMessageFilter.
-      * The field will be removed in future releases
-      */
-      MessageFilter filter = 2 [deprecated = true];
-      RootMessageFilter root_filter = 10;
-    }
+    reserved 2;
+    RootMessageFilter root_filter = 10;
     Checkpoint checkpoint = 3; // Registered Checkpoint. If the chain_id is also set in the request the checkpoint will be ignored
     int64  message_timeout = 11; // Timeout to wait for messages after checkpoint. The message's timestamp will be used to compute the timeout
     int64 timeout = 4; // Timeout for rule execution. Uses the real time to limit the execution of the rule
@@ -72,11 +66,7 @@ message CheckRuleResponse {
 
 message CheckSequenceRuleRequest {
     PreFilter pre_filter = 1;
-    /*
-    * This filters will be converted to root_filters if they are not set.
-    * If message_filters and root_filters are both set the error response will be returned.
-    */
-    repeated MessageFilter message_filters = 2 [deprecated = true];
+    reserved 2;
     /*
     * Either this field or message_filters must be set. If both are set the error response will be received from check1
     */
