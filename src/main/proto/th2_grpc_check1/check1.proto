@@ -84,6 +84,7 @@ message CheckSequenceRuleRequest {
     ChainID chain_id = 11; // The chain id to continue checking.
                            // If it's not set the check will be started from the specified checkpoint otherwise checkpoint will be ignored
     google.protobuf.BoolValue silence_check = 14;
+    string book_name = 15;
 }
 
 message CheckSequenceRuleResponse {
@@ -107,6 +108,7 @@ message NoMessageCheckRequest {
     EventID parent_event_id = 7;
     string description = 8;
     Direction direction = 9;
+    string book_name = 10;
 }
 
 message NoMessageCheckResponse {
