@@ -41,7 +41,7 @@ If you wish to manually create and publish a package for Python:
 ### 4.0.0
 + Migrated to `grpc-common` version with books/pages
 + Marked deprecated fields as `reserved`
-+ Added `book_name` to `CheckRuleRequest`
++ Added `book_name` to `CheckRuleRequest`, `CheckSequenceRuleRequest` and `NoMessageCheckRequest`
 
 ### 3.5.1
 
