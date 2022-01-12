@@ -57,6 +57,7 @@ message CheckRuleRequest {
     Direction direction = 8;
     ChainID chain_id = 9; // The chain id to continue checking.
                           // If it's not set the check will be started from the specified checkpoint otherwise checkpoint will be ignored
+    string book_name = 12;
 }
 
 message CheckRuleResponse {
