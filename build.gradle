@@ -16,7 +16,7 @@ targetCompatibility = 11
 ext {
     grpcVersion                 = '1.32.1'
     protobufVersion             = '3.13.0'
-    serviceGeneratorVersion = '3.2.1'
+    serviceGeneratorVersion = '3.2.2'
 
     genDir              = file("${project.rootDir}/src/gen")
     sharedDir           = file("${project.rootDir}/shared")
@@ -40,8 +40,8 @@ repositories {
 }
 
 dependencies {
-    api platform('com.exactpro.th2:bom:3.0.0')
-    api "com.exactpro.th2:grpc-common:3.11.1"
+    api platform('com.exactpro.th2:bom:3.2.0')
+    api "com.exactpro.th2:grpc-common:3.12.0-TH2-3775-2889744787-SNAPSHOT"
 
     api "com.google.protobuf:protobuf-java-util"
     api "io.grpc:grpc-stub"
