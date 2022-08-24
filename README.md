@@ -40,7 +40,7 @@ If you wish to manually create and publish a package for Python:
 
 ### 3.6.1
 
-+ Update to `th2-grpc-common` version `3.12.0`
++ Update to `th2-grpc-common` version `3.12.0` (added `check_simple_collections_order` parameter to `RootComparisonSettings`).
 
 ### 3.6.0
 

@@ -41,7 +41,7 @@ repositories {
 
 dependencies {
     api platform('com.exactpro.th2:bom:3.2.0')
-    api "com.exactpro.th2:grpc-common:3.12.0-TH2-3775-2889744787-SNAPSHOT"
+    api "com.exactpro.th2:grpc-common:3.12.0-dev-2917850962-SNAPSHOT"
 
     api "com.google.protobuf:protobuf-java-util"
     api "io.grpc:grpc-stub"
