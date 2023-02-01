@@ -70,7 +70,7 @@ message CheckRuleRequest {
 message CheckRuleResponse {
     RequestStatus status = 1;
     ChainID chain_id = 2; // You can use it to unite the next rule to the chain with currently submitted one
-    sint32 request_id = 3; // Can be used for requesting response via 'waitForResponse' method
+    int64 rule_id = 3; // Can be used for requesting response via 'waitForResult' method
 }
 
 message CheckSequenceRuleRequest {
@@ -102,7 +102,7 @@ message CheckSequenceRuleRequest {
 message CheckSequenceRuleResponse {
     RequestStatus status = 1;
     ChainID chain_id = 2; // You can use it to unite the next rule to the chain with currently submitted one
-    sint32 request_id = 3; // Can be used for requesting response via 'waitForResponse' method
+    int64 rule_id = 3; // Can be used for requesting response via 'waitForResult' method
 }
 
 message PreFilter {
@@ -127,13 +127,15 @@ message NoMessageCheckRequest {
 message NoMessageCheckResponse {
     RequestStatus status = 1;
     ChainID chain_id = 2; // You can use it to unite the next rule to the chain with currently submitted one
-    sint32 request_id = 3; // Can be used for requesting response via 'waitForResponse' method
+    int64 rule_id = 3; // Can be used for requesting response via 'waitForResult' method
 }
 
 message WaitForResultRequest {
-    sint32 request_id = 1;
+    int64 rule_id = 1;
+    int64 timeout = 2; // Timeout in milliseconds for waiting for result
 }
 
 message WaitForResultResponse {
-    EventStatus rule_result = 1;
+    RequestStatus status = 1;
+    EventStatus rule_result = 2;
 }
