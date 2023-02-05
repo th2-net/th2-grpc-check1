@@ -59,6 +59,7 @@ message CheckRuleRequest {
     Checkpoint checkpoint = 3; // Registered Checkpoint. If the chain_id is also set in the request the checkpoint will be ignored
     int64 message_timeout = 11; // Timeout to wait for messages after checkpoint. The message's timestamp will be used to compute the timeout
     int64 timeout = 4; // Timeout for rule execution. Uses the real time to limit the execution of the rule
+    bool store_result = 12; // Store the result of the rule for later request by the client
     reserved 5; // ReportId reportId = 5; reserved now
     EventID parent_event_id = 6;
     string description = 7;
@@ -87,6 +88,7 @@ message CheckSequenceRuleRequest {
     Checkpoint checkpoint = 3; // Registered Checkpoint. If the chain_id is also set in the request the checkpoint will be ignored
     int64 message_timeout = 13; // Timeout to wait for messages after checkpoint. The message's timestamp will be used to compute the timeout
     int64 timeout = 4; // Timeout for rule execution. Uses the real time to limit the execution of the rule
+    bool store_result = 15; // Store the result of the rule for later request by the client
     ConnectionID connectivity_id = 5;
     reserved 6; // ReportId reportId = 5; reserved now
     EventID parent_event_id = 7;
@@ -114,6 +116,7 @@ message NoMessageCheckRequest {
     PreFilter pre_filter = 1;
     int64 message_timeout = 2; // Timeout to wait for messages after checkpoint. The message's timestamp will be used to compute the timeout
     int64 timeout = 3; // Timeout for rule execution. Uses the real time to limit the execution of the rule
+    bool store_result = 10; // Store the result of the rule for later request by the client
     Checkpoint checkpoint = 4; // Registered Checkpoint. If the chain_id is also set in the request the checkpoint will be ignored
     ChainID chain_id = 5; // You can use it to unite the next rule to the chain with currently submitted one
     ConnectionID connectivity_id = 6;
