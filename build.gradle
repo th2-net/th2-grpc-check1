@@ -40,8 +40,8 @@ repositories {
 }
 
 dependencies {
-    api platform('com.exactpro.th2:bom:3.0.0')
-    api "com.exactpro.th2:grpc-common:4.0.0-th2-2150-books-pages-1606698156-SNAPSHOT"
+    api platform('com.exactpro.th2:bom:4.1.0')
+    api "com.exactpro.th2:grpc-common:4.0.0-th2-2150-books-pages+"
 
     api "com.google.protobuf:protobuf-java-util"
     api "io.grpc:grpc-stub"
