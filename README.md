@@ -43,6 +43,10 @@ If you wish to manually create and publish a package for Python:
 + Marked deprecated fields as `reserved`
 + Added `book_name` to `CheckRuleRequest`, `CheckSequenceRuleRequest` and `NoMessageCheckRequest`
 
+### 3.7.0
+
++ Update `th2-bom` to `4.1.0`
+
 ### 3.6.0
 
 + Update to `th2-grpc-common` version `3.11.1`

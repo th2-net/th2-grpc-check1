@@ -41,7 +41,7 @@ repositories {
 
 dependencies {
     api platform('com.exactpro.th2:bom:4.1.0')
-    api "com.exactpro.th2:grpc-common:4.0.0-th2-2150-books-pages+"
+    api "com.exactpro.th2:grpc-common:4.1.0-dev-version-4-4105266785-4b72745-SNAPSHOT"
 
     api "com.google.protobuf:protobuf-java-util"
     api "io.grpc:grpc-stub"
@@ -197,3 +197,10 @@ clean {
     delete genDir
     delete sharedDir
 }
+
+configurations {
+    compileClasspath {
+        resolutionStrategy.activateDependencyLocking()
+    }
+}
+
