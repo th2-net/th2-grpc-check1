@@ -133,7 +133,7 @@ message NoMessageCheckResponse {
 
 message WaitForResultRequest {
     int64 rule_id = 1;
-    google.protobuf.Duration timeout = 2; // Timeout in milliseconds for waiting for result
+    google.protobuf.Duration timeout = 2; // Timeout for waiting for result
 }
 
 message WaitForResultResponse {

@@ -41,6 +41,9 @@ If you wish to manually create and publish a package for Python:
 ### 3.6.1
 
 + Update to `th2-grpc-common` version `3.12.0` (added `check_simple_collections_order` parameter to `RootComparisonSettings`).
++ gRPC method `WaitForResult` added
++ `WaitForResult` method added
++ `store_result` parameter added to rule creation requests, `rule_id` added to responses
 
 ### 3.6.0
 
