@@ -5,6 +5,8 @@ plugins {
     id "io.github.gradle-nexus.publish-plugin" version "1.0.0"
     id 'signing'
     id "com.google.protobuf" version "0.8.15"
+    id "org.owasp.dependencycheck" version "8.1.0"
+
 }
 
 group = 'com.exactpro.th2'
@@ -201,6 +203,17 @@ clean {
 configurations {
     compileClasspath {
         resolutionStrategy.activateDependencyLocking()
+    }
+}
+
+dependencyCheck {
+    formats=['SARIF', 'JSON', 'HTML']
+    failBuildOnCVSS=5
+
+    analyzers {
+        assemblyEnabled = false
+        nugetconfEnabled = false
+        nodeEnabled = false
     }
 }
 
