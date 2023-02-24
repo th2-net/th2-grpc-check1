@@ -1,4 +1,4 @@
-# th2 gRPC check1 library (3.7.0)
+# th2 gRPC check1 library (3.8.0)
 
 This library contains proto messages and `Check1` service with RPC methods that are used in [th2 check1](https://github.com/th2-net/th2-check1 "th2-check1"). See [check1.proto](src/main/proto/th2_grpc_check1/check1.proto "check1.proto") file for details. <br>
 Tool generates code from `.proto` files and uploads built packages (`.proto` files and generated code) to the specified repositories.
@@ -37,6 +37,14 @@ If you wish to manually create and publish a package for Python:
     `PYPI_REPOSITORY_URL`, `PYPI_USER` and `PYPI_PASSWORD` are parameters for publishing.
 
 ## Release notes
+
+### 3.8.0
+
++ Update `th2-bom` to `4.2.0` 
++ Update `grpc-service-generator` to `3.3.1` 
++ Updated grpc to `1.48.1`
++ Updated protobuf to `3.21.7`
++ Add Python vulnerabilities scan
 
 ### 3.7.0
 
