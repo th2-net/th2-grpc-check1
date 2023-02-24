@@ -42,6 +42,8 @@ If you wish to manually create and publish a package for Python:
 
 + Update `th2-bom` to `4.2.0` 
 + Update `grpc-service-generator` to `3.3.1` 
++ Updated grpc to `1.48.1`
++ Updated protobuf to `3.21.7`
 + Add Python vulnerabilities scan
 
 ### 3.7.0
