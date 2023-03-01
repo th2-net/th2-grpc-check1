@@ -18,10 +18,10 @@ jobs:
         uses: notiz-dev/github-action-json-property@release
         with:
           path: package_info.json
-          prop_path: package_name
+          prop_path: package_version
       - name: Create dev package version
         id: devPostfix
-        run: echo "value="${{ steps.ver.outputs.release_version }}-dev"" >> $GITHUB_OUTPUT
+        run: echo "value="${{ steps.version.outputs.prop }}-dev"" >> $GITHUB_OUTPUT
       - name: Set version for current build in package_info.json
         uses: MerthinTechnologies/edit-json-action@v1
         with:
