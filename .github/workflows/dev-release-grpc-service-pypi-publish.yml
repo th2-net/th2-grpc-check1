@@ -1,3 +1,12 @@
+name: Dev release and publish Python distributions to PyPI. New gRPC generator
+
+on:
+  push:
+    branches:
+      - dev-version-*
+    paths-ignore:
+      - README.md
+
 jobs:
   build-n-publish:
     name: Build and Python distributions to PyPI
