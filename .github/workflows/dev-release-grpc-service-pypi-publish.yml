@@ -18,7 +18,7 @@ jobs:
         uses: notiz-dev/github-action-json-property@release
         with:
           path: package_info.json
-          prop_path: package_name
+          prop_path: package_version
       - name: Create dev package version
         id: devPostfix
         run: echo "value="${{ steps.version.outputs.prop }}-dev"" >> $GITHUB_OUTPUT
