@@ -21,7 +21,7 @@ jobs:
           prop_path: package_name
       - name: Create dev package version
         id: devPostfix
-        run: echo "value="${{ steps.version.outputs.release_version }}-dev"" >> $GITHUB_OUTPUT
+        run: echo "value="${{ steps.version.outputs.prop }}-dev"" >> $GITHUB_OUTPUT
       - name: Set version for current build in package_info.json
         uses: MerthinTechnologies/edit-json-action@v1
         with:
