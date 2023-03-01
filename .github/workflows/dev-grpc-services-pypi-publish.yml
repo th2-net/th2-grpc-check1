@@ -5,6 +5,7 @@ on:
     branches-ignore:
     - master
     - version-*
+    - dev-version-*
 #     paths:
 #     - package_info.json
     paths-ignore:
