@@ -6,6 +6,7 @@ plugins {
     id 'signing'
     id "com.google.protobuf" version "0.9.3"
     id "org.owasp.dependencycheck" version "8.2.1"
+    id "com.gorylenko.gradle-git-properties" version "2.4.1"
 }
 
 group = 'com.exactpro.th2'
@@ -19,7 +20,7 @@ ext {
     protobufVersion = '3.23.2' // The protoc:3.23.3 https://github.com/protocolbuffers/protobuf/issues/13070
     serviceGeneratorVersion = '3.4.0-TH2-4887-vulnerabilities-5346040251-1bed6cd-SNAPSHOT'
 
-    genDir = file("${project.rootDir}/src/gen")
+    genBaseDir = file("${buildDir}/generated/source/proto") // from protobuf plugin
 }
 
 repositories {
@@ -40,8 +41,8 @@ repositories {
 }
 
 dependencies {
-    api platform('com.exactpro.th2:bom:4.4.0-update-libs-5345334944-c71fdc9-SNAPSHOT')
-    api "com.exactpro.th2:grpc-common:4.3.0-TH2-4887-vulnerabilities-5374522292-1f54a29-SNAPSHOT"
+    api platform('com.exactpro.th2:bom:4.4.0')
+    api 'com.exactpro.th2:grpc-common:4.3.0-TH2-4887-vulnerabilities-+'
 
     api "com.google.protobuf:protobuf-java-util"
     api "io.grpc:grpc-stub"
@@ -52,6 +53,15 @@ dependencies {
     implementation "javax.annotation:javax.annotation-api:1.3.2"
 
     api "com.exactpro.th2:grpc-service-generator:${serviceGeneratorVersion}"
+}
+
+sourceSets {
+    main {
+        // the proto plugins add generated dir to source sets
+        resources {
+            srcDirs "$genBaseDir/main/services/java/resources"
+        }
+    }
 }
 
 protobuf {
@@ -66,7 +76,6 @@ protobuf {
             artifact = "com.exactpro.th2:grpc-service-generator:${serviceGeneratorVersion}:all@jar"
         }
     }
-    generateProtoTasks.generatedFilesBaseDir = genDir
     generateProtoTasks {
         all()*.plugins {
             grpc {}
@@ -105,15 +114,6 @@ tasks.withType(Sign).configureEach {
         project.hasProperty('signingKey') &&
                 project.hasProperty('signingPassword')
     }
-}
-
-// FIXME: related issue https://github.com/gradle/gradle/issues/17236
-// Also, the problem can be related to source set imports
-tasks.withType(Jar).configureEach {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-tasks.withType(Copy).configureEach {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 // disable running task 'initializeSonatypeStagingRepository' on a gitlab
@@ -183,10 +183,6 @@ signing {
     String signingPassword = findProperty("signingPassword")
     useInMemoryPgpKeys(signingKey, signingPassword)
     sign publishing.publications.mavenJava
-}
-
-clean {
-    delete genDir
 }
 
 dependencyLocking {
