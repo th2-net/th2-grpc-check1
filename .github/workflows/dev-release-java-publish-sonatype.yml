@@ -15,7 +15,7 @@ jobs:
       build-target: 'Sonatype'
       runsOn: ubuntu-latest
       devRelease: true
-      gradleVersion: '6'
+      gradleVersion: '7'
     secrets:
       sonatypeUsername: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
       sonatypePassword: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
