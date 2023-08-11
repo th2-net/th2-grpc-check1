@@ -91,6 +91,7 @@ protobuf {
 }
 
 compileJava.dependsOn.add('generateProto')
+processResources.dependsOn.add('generateProto')
 
 java {
     withJavadocJar()
