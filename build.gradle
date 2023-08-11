@@ -18,7 +18,7 @@ targetCompatibility = 11
 ext {
     grpcVersion = '1.56.0'
     protobufVersion = '3.23.2' // The protoc:3.23.3 https://github.com/protocolbuffers/protobuf/issues/13070
-    serviceGeneratorVersion = '3.4.0-TH2-4887-vulnerabilities-5346040251-1bed6cd-SNAPSHOT'
+    serviceGeneratorVersion = '3.4.0'
 
     genBaseDir = file("${buildDir}/generated/source/proto") // from protobuf plugin
 }
@@ -42,7 +42,7 @@ repositories {
 
 dependencies {
     api platform('com.exactpro.th2:bom:4.4.0')
-    api 'com.exactpro.th2:grpc-common:4.3.0-TH2-4887-vulnerabilities-+'
+    api 'com.exactpro.th2:grpc-common:4.3.0-dev'
 
     api "com.google.protobuf:protobuf-java-util"
     api "io.grpc:grpc-stub"
@@ -118,7 +118,7 @@ tasks.withType(Sign).configureEach {
 
 // disable running task 'initializeSonatypeStagingRepository' on a gitlab
 tasks.configureEach { task ->
-    if (task.name.equals('initializeSonatypeStagingRepository') &&
+    if (task.name == 'initializeSonatypeStagingRepository' &&
             !(project.hasProperty('sonatypeUsername') && project.hasProperty('sonatypePassword'))
     ) {
         task.enabled = false
