@@ -1,4 +1,4 @@
-# th2 gRPC check1 library (4.2.1)
+# th2 gRPC check1 library (4.2.2)
 
 This library contains proto messages and `Check1` service with RPC methods that are used
 in [th2 check1](https://github.com/th2-net/th2-check1 "th2-check1").
