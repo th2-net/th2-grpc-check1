@@ -30,6 +30,7 @@ service Check1 {
     rpc submitCheckSequenceRule(CheckSequenceRuleRequest) returns (CheckSequenceRuleResponse) {}
     rpc submitNoMessageCheck(NoMessageCheckRequest) returns (NoMessageCheckResponse) {}
     rpc waitForResult(WaitForResultRequest) returns (WaitForResultResponse) {}
+    rpc multiSubmitRules(MultiSubmitRulesRequest) returns (MultiSubmitRulesResponse) {}
 }
 
 message CheckpointRequest {
@@ -132,4 +133,12 @@ message WaitForResultRequest {
 message WaitForResultResponse {
     RequestStatus status = 1;
     EventStatus rule_result = 2;
+}
+
+message MultiSubmitRulesRequest {
+    repeated CheckSequenceRuleRequest rules = 1;
+}
+
+message MultiSubmitRulesResponse {
+    repeated CheckSequenceRuleResponse responses = 1;
 }
