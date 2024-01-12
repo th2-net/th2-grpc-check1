@@ -47,6 +47,10 @@ If you wish to manually create and publish a package for Python:
 
 ## Release notes
 
+### 4.3.1
+
++ Correct dependencies: replace snapshots with release versions
+
 ### 4.3.0
 
 + Update to `th2-grpc-common` version `3.12.0` (added `check_simple_collections_order` parameter to `RootComparisonSettings`).
