@@ -135,10 +135,11 @@ message WaitForResultResponse {
     EventStatus rule_result = 2;
 }
 
-message MultiSubmitRulesRequest {
+message MultiSubmitCheckSequenceRulesRequest {
     repeated CheckSequenceRuleRequest rules = 1;
+    bool omit_response = 2;
 }
 
-message MultiSubmitRulesResponse {
+message MultiSubmitCheckSequenceRulesResponse {
     repeated CheckSequenceRuleResponse responses = 1;
 }
