@@ -1,4 +1,4 @@
-# th2 gRPC check1 library (4.3.0)
+# th2 gRPC check1 library (4.4.0)
 
 This library contains proto messages and `Check1` service with RPC methods that are used
 in [th2 check1](https://github.com/th2-net/th2-check1 "th2-check1").
@@ -47,11 +47,15 @@ If you wish to manually create and publish a package for Python:
 
 ## Release notes
 
+### 4.4.0
+
++ `multiSubmitRules` method added 
+
 ### 4.3.0
 
 + Update to `th2-grpc-common` version `3.12.0` (added `check_simple_collections_order` parameter to `RootComparisonSettings`).
 + gRPC method `WaitForResult` added
-+ `WaitForResult` method added
++ `waitForResult` method added
 + `store_result` parameter added to rule creation requests, `rule_id` added to responses
 
 ### 4.2.0

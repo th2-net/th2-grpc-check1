@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2023 Exactpro (Exactpro Systems Limited)
+ * Copyright 2020-2024 Exactpro (Exactpro Systems Limited)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ import "th2_grpc_common/common.proto";
 
 option java_multiple_files = true;
 option java_package = "com.exactpro.th2.check1.grpc";
-
 
 service Check1 {
     rpc createCheckpoint (CheckpointRequest) returns (CheckpointResponse) {}
@@ -135,11 +134,25 @@ message WaitForResultResponse {
     EventStatus rule_result = 2;
 }
 
-message MultiSubmitCheckSequenceRulesRequest {
-    repeated CheckSequenceRuleRequest rules = 1;
+message MultiSubmitRulesRequest {
+    repeated Rule rules = 1;
     bool omit_response = 2;
 }
 
-message MultiSubmitCheckSequenceRulesResponse {
-    repeated CheckSequenceRuleResponse responses = 1;
+message MultiSubmitRulesResponse {
+    repeated RuleResponse responses = 1;
+}
+
+message Rule {
+    oneof one_rule {
+        CheckRuleRequest checkRuleRequest = 1;
+        CheckSequenceRuleRequest sequenceRule = 2;
+        NoMessageCheckRequest noMessageRule = 3;
+    }
+}
+
+message RuleResponse {
+    RequestStatus status = 1;
+    ChainID chain_id = 2; // You can use it to unite the next rule to the chain with currently submitted one
+    int64 rule_id = 3; // Can be used for requesting response via 'waitForResult' method
 }
