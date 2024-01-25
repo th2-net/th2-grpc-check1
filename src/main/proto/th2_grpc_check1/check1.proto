@@ -18,6 +18,7 @@ syntax = "proto3";
 
 import "google/protobuf/wrappers.proto";
 import "google/protobuf/duration.proto";
+import "google/protobuf/empty.proto";
 import "th2_grpc_common/common.proto";
 
 option java_multiple_files = true;
@@ -30,6 +31,7 @@ service Check1 {
     rpc submitNoMessageCheck(NoMessageCheckRequest) returns (NoMessageCheckResponse) {}
     rpc waitForResult(WaitForResultRequest) returns (WaitForResultResponse) {}
     rpc submitMultipleRules(MultiRulesRequest) returns (MultiRulesResponse) {}
+    rpc postMultipleRules(MultiRulesRequest) returns (google.protobuf.Empty) {}
 }
 
 message CheckpointRequest {
@@ -135,8 +137,8 @@ message WaitForResultResponse {
 }
 
 message MultiRulesRequest {
-    repeated Rule rules = 1;
-    bool omit_response = 2;
+    ChainID default_chain = 1;
+    repeated Rule rules = 2;
 }
 
 message MultiRulesResponse {
