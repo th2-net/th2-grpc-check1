@@ -137,8 +137,9 @@ message WaitForResultResponse {
 }
 
 message MultiRulesRequest {
-    ChainID default_chain = 1;
-    repeated Rule rules = 2;
+    EventID default_parent_event_id = 1;
+    ChainID default_chain = 2;
+    repeated Rule rules = 3;
 }
 
 message MultiRulesResponse {
