@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2023 Exactpro (Exactpro Systems Limited)
+ * Copyright 2020-2024 Exactpro (Exactpro Systems Limited)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@ syntax = "proto3";
 
 import "google/protobuf/wrappers.proto";
 import "google/protobuf/duration.proto";
+import "google/protobuf/empty.proto";
 import "th2_grpc_common/common.proto";
 
 option java_multiple_files = true;
 option java_package = "com.exactpro.th2.check1.grpc";
-
 
 service Check1 {
     rpc createCheckpoint (CheckpointRequest) returns (CheckpointResponse) {}
@@ -30,6 +30,8 @@ service Check1 {
     rpc submitCheckSequenceRule(CheckSequenceRuleRequest) returns (CheckSequenceRuleResponse) {}
     rpc submitNoMessageCheck(NoMessageCheckRequest) returns (NoMessageCheckResponse) {}
     rpc waitForResult(WaitForResultRequest) returns (WaitForResultResponse) {}
+    rpc submitMultipleRules(MultiRulesRequest) returns (MultiRulesResponse) {}
+    rpc postMultipleRules(MultiRulesRequest) returns (google.protobuf.Empty) {}
 }
 
 message CheckpointRequest {
@@ -132,4 +134,28 @@ message WaitForResultRequest {
 message WaitForResultResponse {
     RequestStatus status = 1;
     EventStatus rule_result = 2;
+}
+
+message MultiRulesRequest {
+    EventID default_parent_event_id = 1;
+    ChainID default_chain = 2;
+    repeated Rule rules = 3;
+}
+
+message MultiRulesResponse {
+    repeated RuleResponse responses = 1;
+}
+
+message Rule {
+    oneof one_rule {
+        CheckRuleRequest checkRuleRequest = 1;
+        CheckSequenceRuleRequest sequenceRule = 2;
+        NoMessageCheckRequest noMessageRule = 3;
+    }
+}
+
+message RuleResponse {
+    RequestStatus status = 1;
+    ChainID chain_id = 2; // You can use it to unite the next rule to the chain with currently submitted one
+    int64 rule_id = 3; // Can be used for requesting response via 'waitForResult' method
 }
