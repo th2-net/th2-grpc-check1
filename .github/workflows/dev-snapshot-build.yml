@@ -1,4 +1,4 @@
-name: Dev build and publish Python distributions to PyPI. New gRPC generator
+name: Dev build and publish Java distributions to sonatype snapshot repository and python to PyPi
 
 on:
   push:
@@ -9,6 +9,17 @@ on:
       - README.md
 
 jobs:
+  build-job:
+    uses: th2-net/.github/.github/workflows/compound-java-dev.yml@main
+    with:
+      build-target: 'Sonatype'
+      runsOn: ubuntu-latest
+    secrets:
+      sonatypeUsername: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
+      sonatypePassword: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
+      sonatypeSigningKey: ${{ secrets.SONATYPE_GPG_ARMORED_KEY }}
+      sonatypeSigningPassword: ${{ secrets.SONATYPE_SIGNING_PASSWORD }}
+      nvd-api-key: ${{ secrets.NVD_APIKEY }}
   collect-version:
     name: Get version from gradle.properties
     uses: th2-net/.github/.github/workflows/compound-prebuild-java-dev-workflow.yml@main
