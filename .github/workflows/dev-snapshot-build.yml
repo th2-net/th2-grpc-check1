@@ -1,7 +1,12 @@
 name: Dev build and publish Java distributions to sonatype snapshot repository
 
 on:
-  workflow_dispatch:
+  push:
+    branches-ignore:
+    - master
+    - version-*
+    paths-ignore:
+      - README.md
 
 jobs:
   build-job:
