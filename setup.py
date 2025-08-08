@@ -107,7 +107,7 @@ setup(
     python_requires='>=3.7',
     install_requires=[
         'th2-grpc-common~=4.6',
-        'mypy-protobuf==3.4'
+        'mypy-protobuf~=3.4'
     ],
     packages=packages,
     package_data=package_data,
