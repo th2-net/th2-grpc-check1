@@ -1,13 +1,18 @@
-name: dev release
+name: snapshot
 
 on:
-  workflow_dispatch:
+  push:
+    branches-ignore:
+    - master
+    - version-*
+    paths-ignore:
+      - README.md
 
 jobs:
-  build:
+  build-job:
     uses: th2-net/.github/.github/workflows/compound-grpc.yml@main
     with:
-      build-mode: dev-release
+      build-mode: snapshot
     secrets:
       sonatype-username: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
       sonatype-password: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
