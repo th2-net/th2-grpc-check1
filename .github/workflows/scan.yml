@@ -1,4 +1,4 @@
-name: Scan licenses and vulnerabilities in java project
+name: scan
 
 on:
   workflow_dispatch:
