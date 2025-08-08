@@ -1,12 +1,12 @@
 plugins {
-    id "java-library"
-    id "maven-publish"
+    `java-library`
+    `maven-publish`
     alias(libs.plugins.th2.grpc)
     alias(libs.plugins.th2.publish)
 }
 
-group = 'com.exactpro.th2'
-version = release_version
+group = "com.exactpro.th2"
+version = project.property("release_version").toString()
 
 repositories {
     mavenCentral()

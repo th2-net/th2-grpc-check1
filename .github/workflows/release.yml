@@ -1,4 +1,4 @@
-name: Build and release Java distributions to sonatype and python to PyPi
+name: release
 
 on:
   workflow_dispatch:

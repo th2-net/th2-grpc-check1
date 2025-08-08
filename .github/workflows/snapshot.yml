@@ -1,4 +1,4 @@
-name: Dev build and publish Java distributions to sonatype snapshot repository and python to PyPi
+name: snapshot
 
 on:
   push:
