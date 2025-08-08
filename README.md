@@ -1,4 +1,4 @@
-# th2 gRPC check1 library (4.4.0)
+# th2 gRPC check1 library (4.5.0)
 
 This library contains proto messages and `Check1` service with RPC methods that are used
 in [th2 check1](https://github.com/th2-net/th2-check1 "th2-check1").
@@ -46,6 +46,13 @@ If you wish to manually create and publish a package for Python:
    `PYPI_REPOSITORY_URL`, `PYPI_USER` and `PYPI_PASSWORD` are parameters for publishing.
 
 ## Release notes
+
+### 4.5.0
++ Updated:
+  + th2 gradle plugin: `0.3.4` (bom: `4.13.1`)
+  + th2-grpc-common: `4.6.0`
+
++ `multiSubmitRules` method added
 
 ### 4.4.0
 
